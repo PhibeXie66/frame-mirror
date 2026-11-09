@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="上传商品、检索电影海报视觉语言，并生成商业广告创意方案。" />
+    <title>帧镜 — 电影感商业广告工作室</title>
+    <link rel="stylesheet" href="/assets/styles.css?v=9" />
+    <link rel="stylesheet" href="/assets/editorial.css?v=5" />
+  </head>
+  <body>
+    <div class="ambient-grid" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="返回首页">
+        <span class="brand-mark">FM</span>
+        <span class="brand-copy"><strong>帧镜影像</strong><small>FRAME MIRROR PICTURE HOUSE</small></span>
+      </a>
+      <div class="status-pill" id="statusPill" aria-live="polite"><i></i><span>正在载入视觉档案</span></div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">FRAME MIRROR / VISUAL PRODUCTION STUDIO</p>
+          <div class="frame-wordmark" aria-hidden="true">FRAME MIRROR</div>
+          <h1>把你的商品，<br /><em>拍成一部电影。</em></h1>
+          <p class="lede">一间以三千张电影海报为视觉档案的商业影像工作室。上传商品、描述气氛、挑选参考，再把它们编排成一张属于你的电影感广告。</p>
+          <a class="hero-action" href="#productStage">开始创作 <b>↘</b></a>
+        </div>
+        <aside class="hero-spec" aria-label="创作流程">
+          <div class="pixel-art" aria-hidden="true"><span></span><span></span><span></span></div>
+          <p>01 / 识别商品</p><p>02 / 定义电影感</p><p>03 / 选择视觉参考</p><p>04 / 生成广告方案</p>
+          <b>LOCAL CREATIVE WORKFLOW</b>
+        </aside>
+      </section>
+
+      <section id="productStage" class="stage product-stage" aria-labelledby="productTitle">
+        <div class="stage-index">01</div>
+        <div class="stage-body">
+          <div class="section-heading">
+            <div><p class="section-label">PRODUCT INPUT / 商品入口</p><h2 id="productTitle">上传你的主角</h2></div>
+            <p>上传 JPG、PNG 或 WebP，最大 20 MB。图片只保存在本地。</p>
+          </div>
+          <div class="product-grid">
+            <label id="dropZone" class="drop-zone" for="productFile">
+              <input id="productFile" type="file" accept="image/jpeg,image/png,image/webp" />
+              <img id="productPreview" alt="商品预览" hidden />
+              <span id="dropCopy" class="drop-copy"><b>＋</b><strong>拖入或选择商品图片</strong><small>最好使用主体清晰、背景简单的图片</small></span>
+              <span class="drop-corner">UPLOAD / 01</span>
+            </label>
+            <div class="product-fields">
+              <label><span>商品名称 <i>可选，识别后也能修改</i></span><input id="productName" maxlength="100" placeholder="例如：深海系列机械腕表" /></label>
+              <label><span>商品描述 <i>材质、卖点、品牌语气</i></span><textarea id="productDescription" maxlength="600" rows="4" placeholder="例如：钛金属表壳、蓝宝石镜面，强调精密、冷峻与探索感。"></textarea></label>
+              <button id="analyzeButton" class="primary-button" type="button" disabled><span>识别商品主体</span><b>↗</b></button>
+              <div id="analysisResult" class="analysis-result" hidden><p>商品识别结果</p><div id="categoryChips" class="category-chips"></div><small>点击标签可更正分类；商品名称和描述始终以你的输入为准。</small></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stage search-stage" aria-labelledby="searchTitle">
+        <div class="stage-index">02</div>
+        <div class="stage-body">
+          <div class="section-heading compact"><div><p class="section-label">STYLE DIRECTION / 电影感定义</p><h2 id="searchTitle">你想让它进入怎样的世界？</h2></div></div>
+          <form id="searchForm" class="search-form">
+            <label class="search-input-wrap"><span class="sr-only">风格描述</span><input id="queryInput" name="query" autocomplete="off" maxlength="240" value="黑金奢华、神秘、电影感强、强烈留白" placeholder="例如：冷峻蓝调、锋利留白、未来工业感……" /><span class="cursor-mark" aria-hidden="true"></span></label>
+            <button id="searchButton" class="primary-button search-button" type="submit"><span>搜索视觉参考</span><b>↗</b></button>
+          </form>
+          <div class="suggestions" aria-label="风格示例">
+            <button data-query="黑金奢华、神秘、电影感强、强烈留白">黑金奢华</button>
+            <button data-query="冷峻蓝调、像素质感、强烈留白、实验平面设计">蓝调实验</button>
+            <button data-query="法式文艺电影、柔和自然光、大量留白、诗意克制">法式留白</button>
+            <button data-query="霓虹赛博朋克、蓝紫色、未来城市、高对比度">霓虹未来</button>
+            <button data-query="复古港片、红绿色调、胶片颗粒、强烈戏剧感">复古港风</button>
+          </div>
+          <div class="filters">
+            <label><span>起始年份</span><input id="yearFrom" type="number" min="1900" max="2100" /></label><span class="filter-rule"></span>
+            <label><span>结束年份</span><input id="yearTo" type="number" min="1900" max="2100" /></label>
+            <label class="result-count"><span>展示数量</span><select id="topK"><option value="12">12</option><option value="16" selected>16</option><option value="24">24</option><option value="32">32</option></select></label>
+          </div>
+        </div>
+      </section>
+
+      <section class="archive-section" aria-labelledby="archiveTitle">
+        <div class="archive-heading"><div><p class="section-label">03 / VISUAL REFERENCES</p><h2 id="archiveTitle">选择电影视觉基因</h2></div><p id="resultMeta" class="result-meta">等待第一次检索</p></div>
+        <div id="loadingState" class="loading-state" hidden><div class="film-loader"><span></span><span></span><span></span><span></span></div><p>正在翻阅视觉档案……</p></div>
+        <div id="emptyState" class="empty-state"><span>ARCHIVE / READY</span><p>输入一种氛围，让档案开始工作。</p></div>
+        <div id="gallery" class="gallery" aria-live="polite"></div>
+      </section>
+
+      <section id="briefSection" class="brief-section" aria-labelledby="briefTitle" hidden>
+        <div class="brief-heading"><div><p class="section-label">04 / CREATIVE BLUEPRINT</p><h2 id="briefTitle">商业广告生成方案</h2></div><span class="blueprint-status">READY FOR GENERATION</span></div>
+        <div class="blueprint-grid">
+          <article class="blueprint-card product-card"><span>A / SUBJECT</span><img id="briefProductImage" alt="方案中的商品" /><h3 id="briefProductName">商品</h3><p id="briefProductMeta"></p></article>
+          <article class="blueprint-card direction-card"><span>B / ART DIRECTION</span><h3 id="briefDirection"></h3><div id="briefPalette" class="palette"></div><ul id="briefComposition"></ul></article>
+          <article class="blueprint-card prompt-card"><span>C / GENERATION PROMPT</span><p id="briefPrompt"></p><div class="brief-actions"><button id="copyPromptButton" type="button">复制提示词</button><button id="downloadBriefButton" type="button">下载方案 JSON</button></div></article>
+        </div>
+        <div id="generatorLane" class="generation-lane"><div><span>STILL / 海报生成</span><strong>生成 4 张全新的商业海报</strong><p id="generationEngineStatus">正在检查 Cloudflare 图片引擎配置……</p></div><button id="generateImagesButton" class="generate-action" type="button" disabled>等待引擎配置</button></div>
+        <div id="generationProgress" class="generation-progress" hidden><div class="progress-copy"><span id="generationProgressLabel">准备生成</span><b id="generationProgressValue">0%</b></div><div class="progress-track"><i id="generationProgressBar"></i></div><p>生成会使用商品原图和最多三张海报作为视觉参考，请保持页面开启。</p></div>
+        <section id="generationResults" class="generation-results" aria-labelledby="generationResultsTitle" hidden>
+          <div class="results-heading"><div><p class="section-label">05 / GENERATED CAMPAIGN</p><h2 id="generationResultsTitle">选择一张继续导演</h2></div><div id="versionHistory" class="version-history" aria-label="版本历史"></div></div>
+          <div id="generatedGrid" class="generated-grid"></div>
+          <div id="revisionStudio" class="revision-studio" hidden>
+            <div class="revision-preview"><span>SELECTED FRAME</span><img id="revisionPreview" alt="选中的广告海报" /></div>
+            <div class="revision-chat">
+              <p class="section-label">CREATIVE DIRECTION / REVISION DESK</p>
+              <h3>和创意导演一起调整下一版</h3>
+              <section class="product-layout-panel" aria-labelledby="productLayoutTitle">
+                <div class="product-layout-heading">
+                  <div><span>PRODUCT LAYOUT / LIVE PREVIEW</span><strong id="productLayoutTitle">实时调整商品大小和位置</strong></div>
+                  <button id="layoutResetButton" type="button">重置</button>
+                </div>
+                <div class="product-layout-controls">
+                  <label><span>大小 <b id="layoutScaleValue">62%</b></span><input id="layoutScale" type="range" min="30" max="90" step="1" value="62" /></label>
+                  <label><span>左右 <b id="layoutXValue">居中</b></span><input id="layoutX" type="range" min="-35" max="35" step="1" value="0" /></label>
+                  <label><span>上下 <b id="layoutYValue">居中</b></span><input id="layoutY" type="range" min="-35" max="35" step="1" value="0" /></label>
+                </div>
+                <div class="product-layout-footer"><p id="layoutHint">拖动滑杆即可实时预览；保存时不会让 AI 在背景里再画商品。</p><button id="layoutApplyButton" class="layout-apply-button" type="button">保存布局版本 ↗</button></div>
+              </section>
+              <div id="agentConversation" class="agent-conversation" aria-live="polite">
+                <article class="agent-message assistant"><span>CREATIVE DIRECTOR</span><p>告诉我想改变什么。如果描述还有关键歧义，我会先追问；方案确认后才会生成。</p></article>
+              </div>
+              <div class="revision-quick-actions">
+                <button type="button" data-revision="保持商品和构图不变，只把背景改成冷峻蓝色夜景">冷蓝夜景</button>
+                <button type="button" data-revision="保持其他内容不变，让商品主体放大约百分之二十">商品放大</button>
+                <button type="button" data-revision="删除画面中的人物，只保留商品、建筑与电影光影">删除人物</button>
+                <button type="button" data-revision="增加高级杂志广告的留白和克制感，减少多余装饰">增加留白</button>
+                <button type="button" data-revision="只修改背景，完整保留商品原始外观、标签和比例">只改背景</button>
+              </div>
+              <div class="agent-reference-tools">
+                <label class="reference-upload-button" for="agentReferenceFile">＋ 上传视觉参考图</label>
+                <input id="agentReferenceFile" type="file" accept="image/jpeg,image/png,image/webp" hidden />
+                <div id="agentReferencePreview" class="agent-reference-preview" hidden>
+                  <img id="agentReferenceImage" alt="对话中上传的视觉参考图" />
+                  <p id="agentReferenceMeta"></p>
+                </div>
+              </div>
+              <textarea id="revisionInput" rows="4" maxlength="1200" placeholder="例如：我不想再用黑色室内背景了，希望有一点室外感……"></textarea>
+              <div class="revision-submit-row"><p>Agent 会先理解和追问，不会未经确认直接生成。</p><button id="reviseButton" class="generate-action" type="button">发送给 Agent ↗</button></div>
+              <section id="agentPlan" class="agent-plan" hidden>
+                <div class="agent-plan-heading"><span>AGENT DRAFT / 待确认方案</span><p id="agentPlanMessage"></p></div>
+                <label for="agentPromptPreview">你可以直接修改最终 Prompt</label>
+                <textarea id="agentPromptPreview" rows="7" maxlength="3000"></textarea>
+                <div class="agent-plan-actions"><button id="agentConfirmButton" class="generate-action" type="button">确认方案并生成 2 张 ↗</button></div>
+              </section>
+              <section id="agentGenerationProgress" class="agent-generation-progress" aria-live="polite" hidden>
+                <div class="agent-progress-heading">
+                  <div><span>AGENT GENERATION / 新版本生成中</span><strong id="agentProgressLabel">正在创建修改任务</strong></div>
+                  <b id="agentProgressValue">0%</b>
+                </div>
+                <div class="progress-track"><i id="agentProgressBar"></i></div>
+                <p id="agentProgressStage">请保持页面开启，完成后会自动展示新版本。</p>
+              </section>
+            </div>
+          </div>
+        </section>
+        <section id="motionStudio" class="motion-studio" aria-labelledby="motionTitle">
+          <div class="motion-copy">
+            <p class="section-label">06 / MOTION STUDIO</p>
+            <h3 id="motionTitle">为海报编排一段镜头</h3>
+            <p>描述镜头、节奏和氛围，动态导演会先整理方案；确认后在本地生成 MP4 或 GIF。</p>
+          </div>
+          <div class="motion-director">
+            <div id="motionConversation" class="motion-conversation" aria-live="polite">
+              <article class="motion-message agent"><span>MOTION DIRECTOR</span><p>告诉我你希望这张海报怎样动起来。比如：镜头缓慢推进，背景雾气流动，增加微弱粒子和扫光，5 秒。</p></article>
+            </div>
+            <div class="motion-suggestions" aria-label="动画方案示例">
+              <button type="button" data-motion-prompt="镜头缓慢推进，商品保持稳定，背景雾气流动，增加轻微粒子和扫光，5秒">雾气推进</button>
+              <button type="button" data-motion-prompt="镜头向右横移，海浪产生波纹，商品轻微悬浮，整体克制，4秒">横移波纹</button>
+              <button type="button" data-motion-prompt="镜头逐渐拉远，霓虹光线扫过画面，尘埃缓慢漂浮，5秒">拉远霓虹</button>
+            </div>
+            <div class="motion-prompt-row">
+              <textarea id="motionPrompt" rows="3" maxlength="1000" placeholder="例如：镜头慢慢靠近商品，背景有薄雾和向上漂浮的金色粒子，光线从左向右扫过，5 秒……"></textarea>
+              <button id="motionPlanButton" class="motion-plan-button" type="button">让 Agent 设计 ↗</button>
+            </div>
+            <section id="motionPlan" class="motion-plan" hidden>
+              <span>DIRECTOR'S PLAN</span>
+              <strong id="motionPlanMessage">动画方案已准备好</strong>
+              <div id="motionPlanChips" class="motion-plan-chips"></div>
+            </section>
+          </div>
+          <div class="motion-controls">
+            <label><span>镜头运动</span><select id="motionStyle"><option value="push">缓慢推进</option><option value="pull">逐渐拉远</option><option value="drift">水平漂移</option><option value="breathe">电影呼吸</option></select></label>
+            <label><span>时长</span><select id="motionDuration"><option value="3">3 秒</option><option value="4" selected>4 秒</option><option value="5">5 秒</option><option value="6">6 秒</option><option value="7">7 秒</option><option value="8">8 秒</option></select></label>
+            <label><span>格式</span><select id="motionFormat"><option value="mp4" selected>MP4 视频</option><option value="gif">GIF 动图</option></select></label>
+            <button id="motionGenerateButton" class="generate-action" type="button" disabled>按方案生成视频 ↗</button>
+          </div>
+          <div id="motionProgress" class="motion-progress" hidden>
+            <div><span id="motionProgressLabel">正在准备动态帧</span><b id="motionProgressValue">0%</b></div>
+            <div class="progress-track"><i id="motionProgressBar"></i></div>
+          </div>
+          <div id="motionResult" class="motion-result" hidden>
+            <video id="motionVideo" controls loop muted playsinline hidden></video>
+            <img id="motionGif" alt="生成的动态广告 GIF" hidden />
+            <div><span>MOTION READY</span><strong id="motionResultMeta">动态广告已完成</strong><a id="motionDownload" href="#" download>下载动态广告 ↘</a></div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <aside id="selectionDock" class="selection-dock" aria-label="已选电影视觉参考"><div class="dock-copy"><span>REFERENCE BOARD</span><strong><b id="selectedCount">0</b> / 4 已选择</strong></div><div id="selectedThumbs" class="selected-thumbs"></div><button id="exportButton" class="export-button" disabled>生成广告方案 ↗</button></aside>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <footer><span>帧镜 / FRAME MIRROR STUDIO</span><p>商品识别与海报检索均在本地运行。</p><span>VISUAL ARCHIVE × 3000</span></footer>
+    <script src="/assets/app.js?v=15" defer></script>
+  </body>
+</html>
